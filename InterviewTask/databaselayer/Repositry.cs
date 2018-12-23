@@ -40,7 +40,7 @@ namespace InterviewTask.databaselayer
         {
             return await dbSet.FindAsync(id);
         }
-
+        
         public void Update(Tentity entity)
         {
             dbSet.Attach(entity);

@@ -18,6 +18,6 @@ namespace ClassLibrarydatabaseModel
         public string requestTitle { get; set; }
         public string requestBody { get; set; }
         public string status { get; set; }
-        public int role { get; set; }
+        public Nullable<int> role { get; set; }
     }
 }

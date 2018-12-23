@@ -1,0 +1,41 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+@{
+    ViewBag.Title = "Welcome";
+}
+
+<style>
+    table, tr, td, th {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin: 10px;
+    }
+</style>
+<h2>Welcome to users List</h2>
+<body data-ng-app="APIModule">
+    <div id="tblSubs" ng-controller="APIController">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>UserName</th>
+                <th>Password</th>
+            </tr>
+            <tbody data-ng-repeat="user in Users">
+                <tr>
+                    <td>{{user.Id}}</td>
+                    <td>{{user.Username}}</td>
+                    <td>{{user.password}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script src="~/Scripts/angular.js"></script>
+<script src="~/Scripts/angular-route.js"></script>
+<script src="~/Scripts/APIScripts/app.js"></script>
+<script src="~/Scripts/APIScripts/service.js"></script>
+<script src="~/Scripts/APIScripts/controller.js"></script>

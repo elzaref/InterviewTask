@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="taskModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="taskModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="request">
           <Key>
             <PropertyRef Name="Id" />
@@ -12,8 +12,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="requestTitle" Type="nvarchar(max)" Nullable="false" />
           <Property Name="requestBody" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="status" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="role" Type="int" Nullable="false" />
+          <Property Name="status" Type="nvarchar(max)" />
+          <Property Name="role" Type="int" />
         </EntityType>
         <EntityType Name="roles">
           <Key>
@@ -61,37 +61,46 @@
             <End Role="usersroles" EntitySet="usersroles" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="taskModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="taskEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="requests" EntityType="taskModel.request" />
+          <EntitySet Name="roles" EntityType="taskModel.role" />
+          <EntitySet Name="users" EntityType="taskModel.user" />
+          <EntitySet Name="usersroles" EntityType="taskModel.usersrole" />
+          <AssociationSet Name="FK_usersroles_roles" Association="taskModel.FK_usersroles_roles">
+            <End Role="role" EntitySet="roles" />
+            <End Role="usersrole" EntitySet="usersroles" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="request">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="requestTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="requestBody" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="role" Type="Int32" Nullable="false" />
+          <Property Name="requestTitle" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="requestBody" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="role" Type="Int32" />
         </EntityType>
         <EntityType Name="role">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="rolename" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="descraption" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="usersroles" Relationship="Self.FK_usersroles_roles" FromRole="roles" ToRole="usersroles" />
+          <Property Name="rolename" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="descraption" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="usersroles" Relationship="taskModel.FK_usersroles_roles" FromRole="role" ToRole="usersrole" />
         </EntityType>
         <EntityType Name="user">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="usersrole">
           <Key>
@@ -100,30 +109,20 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="Roleid" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="role" Relationship="Self.FK_usersroles_roles" FromRole="usersroles" ToRole="roles" />
+          <NavigationProperty Name="role" Relationship="taskModel.FK_usersroles_roles" FromRole="usersrole" ToRole="role" />
         </EntityType>
         <Association Name="FK_usersroles_roles">
-          <End Role="roles" Type="Self.role" Multiplicity="1" />
-          <End Role="usersroles" Type="Self.usersrole" Multiplicity="*" />
+          <End Type="taskModel.role" Role="role" Multiplicity="1" />
+          <End Type="taskModel.usersrole" Role="usersrole" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="roles">
+            <Principal Role="role">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="usersroles">
+            <Dependent Role="usersrole">
               <PropertyRef Name="Roleid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="taskEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="requests" EntityType="Self.request" />
-          <EntitySet Name="roles" EntityType="Self.role" />
-          <EntitySet Name="users" EntityType="Self.user" />
-          <EntitySet Name="usersroles" EntityType="Self.usersrole" />
-          <AssociationSet Name="FK_usersroles_roles" Association="Self.FK_usersroles_roles">
-            <End Role="roles" EntitySet="roles" />
-            <End Role="usersroles" EntitySet="usersroles" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -133,38 +132,38 @@
           <EntitySetMapping Name="requests">
             <EntityTypeMapping TypeName="taskModel.request">
               <MappingFragment StoreEntitySet="request">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="requestTitle" ColumnName="requestTitle" />
-                <ScalarProperty Name="requestBody" ColumnName="requestBody" />
-                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="requestBody" ColumnName="requestBody" />
+                <ScalarProperty Name="requestTitle" ColumnName="requestTitle" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="roles">
             <EntityTypeMapping TypeName="taskModel.role">
               <MappingFragment StoreEntitySet="roles">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="rolename" ColumnName="rolename" />
                 <ScalarProperty Name="descraption" ColumnName="descraption" />
+                <ScalarProperty Name="rolename" ColumnName="rolename" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="taskModel.user">
               <MappingFragment StoreEntitySet="users">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="usersroles">
             <EntityTypeMapping TypeName="taskModel.usersrole">
               <MappingFragment StoreEntitySet="usersroles">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Roleid" ColumnName="Roleid" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

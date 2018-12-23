@@ -5,11 +5,11 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="26a4e8b6ad654896a43a068e95965657" Name="Diagram1">
-        <EntityTypeShape EntityType="taskModel.request" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="taskModel.role" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="taskModel.user" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="taskModel.usersrole" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
-        <AssociationConnector Association="taskModel.FK_usersroles_roles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="taskModel.request" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="taskModel.role" Width="1.5" PointX="0.75" PointY="0.875" />
+        <EntityTypeShape EntityType="taskModel.user" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="taskModel.usersrole" Width="1.5" PointX="3" PointY="0.875" />
+        <AssociationConnector Association="taskModel.FK_usersroles_roles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

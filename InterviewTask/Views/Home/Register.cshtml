@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LayoutSC.cshtml";
+}
+
+<h2>Register</h2>
+<body data-ng-app="APIModule">
+    <div id="tblSubs" ng-controller="APIController">
+        <div class="form-group">
+            <label for="UserName">user Name here</label>
+            <input type="text" class="form-control" id="Name" placeholder="Enter userName" [required="string" ] data-ng-model="userName" />
+            <input type="password" class="form-control" id="password" placeholder="Enter password" [required="string" ] data-ng-model="password" />
+        </div>
+        <button type="button" class="btn btn-default" data-ng-click="saveuser();">Save</button>
+    </div>
+</body>
+

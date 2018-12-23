@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "index";
+    Layout = "~/Views/Shared/_LayoutSC.cshtml";
+}
+
+<h2>Create Request</h2>
+
+<body data-ng-app="APIModule">
+    <div id="tblSubs" ng-controller="APIController">
+
+        <div class="form-group">
+            <div>
+                <label for="UserName">Title</label>
+                <input type="text" class="form-control" id="title" placeholder="Enter title" [required="string" ] data-ng-model="Title" />
+            </div>
+            <div>
+                <label for="UserName">Enter Body</label>
+                <input type="text" class="form-control" id="body" placeholder="Enter body" [required="string" ] data-ng-model="Body" />
+            </div>
+        </div>
+        <button type="button" class="btn btn-default" data-ng-click="SaveRequest();">Save</button>
+    </div>
+</body>

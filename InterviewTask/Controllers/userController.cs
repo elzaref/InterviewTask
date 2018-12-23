@@ -30,39 +30,47 @@ namespace InterviewTask.Controllers
             user user = await Repo.GetEntity(id);
             return Ok(user);
         }
-
-        // POST: api/users
-        [HttpPost]
+        public async Task<IHttpActionResult> GetuserByName_Password(string name,string password)
+        {
+            IEnumerable<user> users = await Get();
+            user user = users.Where(one => (one.Username == name) && (one.password == password)).FirstOrDefault();
+            if (user != null)
+                return Ok(user);
+            return NotFound();
+        }
         public async Task<IHttpActionResult> Post(user user)
         {
-            try
+            if (ModelState.IsValid)
             {
-                user modiUser = await Repo.GetEntity(user.Id);
-                if (modiUser != null)
+                try
                 {
-                    Repo.Update(user);
+                    user modiUser = await Repo.GetEntity(user.Id);
+                    if (modiUser != null)
+                    {
+                        Repo.Update(user);
+                    }
+                    else
+                    {
+                        Repo.Add(user);
+                        UOW.Save();
+                    }
+                    return Ok();
                 }
-                else
+                catch
                 {
-                    Repo.Add(user);
+                    return BadRequest();
                 }
-                return Ok();
             }
-            catch
-            {
+            else
                 return BadRequest();
-            }
         }
-
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete]
         public async Task<IHttpActionResult> Delete(int id)
         {
             user user = await Repo.GetEntity(id);
             if (user != null)
             {
                 Repo.Delete(user);
+                UOW.Save();
                 return Ok();
             }
             return NotFound();

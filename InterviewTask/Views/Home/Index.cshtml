@@ -1,24 +1,43 @@
-﻿<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-        a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-        is an ideal platform for building RESTful applications on the .NET Framework.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
+﻿@{
+    Layout = "~/Views/Shared/_LayoutSC.cshtml";
+}
+@using ClassLibrarydatabaseModel;
+
+
+<!DOCTYPE html>
+
+<style>
+    table, tr, td, th {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin: 10px;
+    }
+</style>
+<h2>Welcome <b>@ViewData["currentUser"]</b></h2>
+
+<body data-ng-app="APIModule">
+    <div id="tblSubs" ng-controller="APIController">
+        <div class="form-group">
+            <button type="button" class="btn btn-default" data-ng-click="show(@ViewData["userId"]);">
+                Get Requests
+            </button>
+        </div>
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Body</th>
+            </tr>
+            <tbody data-ng-repeat="request in requests">
+                <tr>
+                    <td>{{request.requestTitle}}</td>
+                    <td>{{request.requestBody}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
-    </div>
-</div>
+</body>
+
+
