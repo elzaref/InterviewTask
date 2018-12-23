@@ -13,7 +13,7 @@ namespace InterviewTask.Controllers
     
     public class userController : ApiController
     {
-        unitOfWork UOW = new unitOfWork();
+        unitOfWork UOW = new unitOfWork();  //instance of unit of work to get repositry instance and united save in case roll back
         Repositry<user> Repo;
         public userController()
         {
@@ -30,6 +30,8 @@ namespace InterviewTask.Controllers
             user user = await Repo.GetEntity(id);
             return Ok(user);
         }
+        // for check if is user
+        // this solution for generic generic repositry and async 
         public async Task<IHttpActionResult> GetuserByName_Password(string name,string password)
         {
             IEnumerable<user> users = await Get();
@@ -45,13 +47,13 @@ namespace InterviewTask.Controllers
                 try
                 {
                     user modiUser = await Repo.GetEntity(user.Id);
-                    if (modiUser != null)
+                    if (modiUser != null)// for update
                     {
                         Repo.Update(user);
                     }
                     else
                     {
-                        Repo.Add(user);
+                        Repo.Add(user);// for new user
                         UOW.Save();
                     }
                     return Ok();
@@ -64,6 +66,7 @@ namespace InterviewTask.Controllers
             else
                 return BadRequest();
         }
+        // for delete user
         public async Task<IHttpActionResult> Delete(int id)
         {
             user user = await Repo.GetEntity(id);

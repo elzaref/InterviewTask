@@ -14,7 +14,7 @@ namespace InterviewTask.Controllers
     
     public class requestController : ApiController
     {
-        unitOfWork UOW = new unitOfWork();
+        unitOfWork UOW = new unitOfWork(); //instance of unit of work to get repositry instance and united save in case roll back
         Repositry<request> Repo;
         public requestController()
         {
@@ -25,12 +25,13 @@ namespace InterviewTask.Controllers
             IEnumerable<request> req = await Repo.GetAll();
             return req;
         }
-        
-        public async Task<IHttpActionResult> Get(int id)
+        //get all requests for user in condition role group
+        public async Task<IHttpActionResult> Get(int userid)
         {
+            // all this code because generic repositry  it is anti pattern  and because using async task
             Repositry<usersrole> userRoleRepositry = UOW.GetReposityInstance<usersrole>();  //repositry for table user role
             IEnumerable<usersrole> usesrRolesAll=await userRoleRepositry.GetAll();//get all data
-            IEnumerable<usersrole> RolesOfuser = usesrRolesAll.Where(ur => ur.UserId == id); //filter for just user
+            IEnumerable<usersrole> RolesOfuser = usesrRolesAll.Where(ur => ur.UserId == userid); //filter for just user
 
             IEnumerable<request> AllRequests = await Repo.GetAll();  //get all requests
             List<request> requests = new List<request>();
@@ -40,6 +41,8 @@ namespace InterviewTask.Controllers
             
             return Ok(requests);
         }
+        //in case create new task 
+        // or update task by manager to assign it to group
         public async Task<IHttpActionResult> Post(request req)
         {
             if (ModelState.IsValid)
@@ -47,13 +50,13 @@ namespace InterviewTask.Controllers
                 try
                 {
                     request modireq = await Repo.GetEntity(req.Id);
-                    if (modireq != null)
+                    if (modireq != null)//for update
                     {
                         Repo.Update(req);
                     }
                     else
                     {
-                        Repo.Add(new request() { requestTitle=req.requestTitle,requestBody=req.requestBody });
+                        Repo.Add(new request() { requestTitle=req.requestTitle,requestBody=req.requestBody });//for new 
                         UOW.Save();
                     }
                     return Ok(new request());
@@ -66,6 +69,7 @@ namespace InterviewTask.Controllers
             else
                 return BadRequest();
         }
+        // for delete task
         public async Task<IHttpActionResult> Delete(int id)
         {
             request req = await Repo.GetEntity(id);

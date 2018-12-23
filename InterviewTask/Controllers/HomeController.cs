@@ -8,15 +8,17 @@ namespace InterviewTask.Controllers
 {
     public class HomeController : Controller
     {
-       
+
+        Logic logic = new Logic();// check for logic or business
+       //to show every employee his group requests
         public ActionResult Index(user user)
         {
             
             ViewBag.Title = "Home Page";
-            if ((user !=null)&&(user.Username != null)&&Session["loged"]==null)
-            {
-                Session.Add("loged", user);
-            }
+            object sessionValue = Session["loged"];
+            if (logic.loged(user, sessionValue))//check to create session because when user login it redirect to this action index
+                Session["loged"] = user;
+
             if (Session["loged"] != null)
             {
                 user u = ((user)Session["loged"]);
@@ -30,9 +32,10 @@ namespace InterviewTask.Controllers
             }
             return View();
         }
+        //to create new employee user
         public ActionResult Register()
         {
-            if (Session["loged"] == null)
+            if (Session["loged"] == null)// if already login go to requests page 
             {
                 ViewBag.Title = "Registeration Page";
 
@@ -43,6 +46,7 @@ namespace InterviewTask.Controllers
                 return Index((user)Session["loged"]);
             }
         }
+        
         public ActionResult Login()
         {
             ViewBag.Title = "Login Page";

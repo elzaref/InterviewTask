@@ -1,6 +1,6 @@
 ﻿app.service("APIService", function ($http) {
     this.Show = function (userId) {
-        return $http.get('/api/request/Get', { params: { "id": userId } }).then(function (response) {
+        return $http.get('/api/request/Get', { params: { "userid": userId } }).then(function (response) {
             return response.data;
         });
     }
