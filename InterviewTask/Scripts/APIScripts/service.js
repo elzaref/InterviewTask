@@ -30,6 +30,20 @@
                 url: '/api/request'
             });
     }
+    this.AssignUser = function (dat) {
+        return $http(
+            {
+                method: 'post',
+                data: dat,
+                url: '/api/roleuser'
+            });
+    }
+    
+    this.showUsers = function () {
+        return $http.get('/api/user').then(function (response) {
+            return response.data;
+        });
+    }
 }); 
 
 ///////////

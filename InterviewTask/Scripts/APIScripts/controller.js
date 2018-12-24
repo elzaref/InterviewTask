@@ -55,6 +55,27 @@
             console.log('Oops! Something went wrong while saving the data.')
         })
     };
+    
+    $scope.AssignUser = function (useid) {
+        data = {
+            userid: useid,
+            roleid: $scope.role
+        };
+        var AssignUser = APIService.AssignUser(data);
+        AssignUser.then(function () {
+        }, function (error) {
+            console.log('Oops! Something went wrong while saving the data.')
+        })
+    };
+    
+    $scope.showUsers = function () {
+        var showUsers = APIService.showUsers();
+        showUsers.then(function (users) {
+            $scope.Users = users;
+        }, function (error) {
+            console.log('Oops! Something went wrong while saving the data.')
+        })
+    };
 }
 
 );

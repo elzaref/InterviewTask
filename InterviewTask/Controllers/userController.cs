@@ -78,5 +78,10 @@ namespace InterviewTask.Controllers
             }
             return NotFound();
         }
+        public user GetUserByID(int id)
+        {
+            user user = Repo.GetEntityByID(id);
+            return user;
+        }
     }
 }

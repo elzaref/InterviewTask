@@ -24,13 +24,12 @@ namespace InterviewTask.Controllers
                 user u = ((user)Session["loged"]);
                 ViewData.Add("currentUser", u.Username);
                 ViewData.Add("userId", u.Id);
+
+
+                return View();
             }
             else
-            {
-                ViewData.Add("currentUser", "guest");
-                ViewData.Add("userId", 0);
-            }
-            return View();
+                return View("error") ;
         }
         //to create new employee user
         public ActionResult Register()

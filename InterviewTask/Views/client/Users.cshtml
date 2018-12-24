@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_LayoutSC.cshtml";
+}
+
+<h2>Users</h2>
+
+<h2>assignUserToRole</h2>
+
+<style>
+    table, tr, td, th {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin: 10px;
+    }
+</style>
+
+<h2>Welcome to users List</h2>
+<body data-ng-app="APIModule">
+    <div id="tblSubs" ng-controller="APIController">
+        <div class="form-group">
+            <button type="button" class="btn btn-default" data-ng-click="showUsers();">
+                Get Requests
+            </button>
+        </div>
+        <table>
+            <tr>
+                <th>UserName</th>
+            </tr>
+            <tbody data-ng-repeat="user in Users">
+                <tr>
+                    <td>{{user.Username}}</td>
+                    <td><a data-ng-href="@Url.Action("assignUserToRole", "client")/{{user.Id}}">assign  </a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+

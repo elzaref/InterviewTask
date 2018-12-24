@@ -40,7 +40,10 @@ namespace InterviewTask.databaselayer
         {
             return await dbSet.FindAsync(id);
         }
-        
+        public Tentity GetEntityByID(int id)
+        {
+            return  dbSet.Find(id);
+        }
         public void Update(Tentity entity)
         {
             dbSet.Attach(entity);

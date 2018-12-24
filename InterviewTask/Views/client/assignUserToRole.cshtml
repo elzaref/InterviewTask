@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "assignUserToRole";
+    Layout = "~/Views/Shared/_LayoutSC.cshtml";
+}
+@using System.Web.Mvc;
+@using ClassLibrarydatabaseModel;
+
+@{
+    var username = ((user)ViewData["user"]).Username;
+    var userid = ((user)ViewData["user"]).Id;
+    List<SelectListItem> RoleList = ((List<SelectListItem>)ViewData["Roles"]);
+}
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+
+
+<h2>assignUserToRole</h2>
+
+<body data-ng-app="APIModule">
+    <div id="tblSubs" ng-controller="APIController">
+        <h2>Create</h2>
+        <div class="form-group">
+            <div>@username</div>
+            <label for="role">role here</label>
+            <input type="text" class="form-control" id="role" placeholder="Enter role" [required="string" ] data-ng-model="role" />
+        </div>
+        <button type="button" class="btn btn-default" data-ng-click="AssignUser(@userid)">OK</button>
+    </div>
+</body>
+<script type="text/javascript">
+    function CallChangefunc(val) {
+        var txt = val;
+    }
+</script>
